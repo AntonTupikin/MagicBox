@@ -1,26 +1,28 @@
 import java.util.Random;
 
-public class magicBox<T> {
+public class MagicBox<T> {
     protected T[] items;
     protected T item;
     protected int boxSize;
     protected int count = 0;
+    protected String name;
 
-    public magicBox(int boxSize) {
+    public MagicBox(int boxSize, String name) {
 
         T[] items = (T[]) new Object[boxSize];
+        this.name=name;
         this.items = items;
         this.boxSize = boxSize;
         this.count = count;
     }
 
-    public boolean addItem(T item) {
+    public boolean addItem(T item) throws ToManyItemException {
         if (count <= (boxSize - 1)) {
             items[count] = item;
             count++;
             return true;
         } else {
-            return false;
+            throw new ToManyItemException(name, boxSize);
         }
     }
 
@@ -30,7 +32,7 @@ public class magicBox<T> {
 
     public T giveItem() {
         Random random = new Random();
-        int randomInt = random.nextInt(items.length + 1);
+        int randomInt = random.nextInt(items.length);
         return items[randomInt];
     }
 
